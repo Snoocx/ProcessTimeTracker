@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessTimeTracker", "ProcessTimeTracker\ProcessTimeTracker.csproj", "{E3185B49-D3BA-49B7-BA33-8288FFFFABFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessTimeTracker", "ProcessTimeTracker\ProcessTimeTracker\ProcessTimeTracker.csproj", "{E3185B49-D3BA-49B7-BA33-8288FFFFABFC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessTimeTrackerGUI", "ProcessTimeTrackerGUI\ProcessTimeTrackerGUI.csproj", "{F9CD7A46-B767-4E63-91B6-156AB128DDED}"
 EndProject
