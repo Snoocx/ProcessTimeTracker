@@ -17,17 +17,18 @@ namespace ProcessTimeTracker.Services
         public TrackerService()
         {
             trackedProcesses = new List<TrackedProcess>();
-
-            var teams = new TrackedProcess();
-            teams.Name = "Teams";
-            teams.PID = 0;
-            teams.RunningTime = 0;
-
-            trackedProcesses.Add(teams);
         }
 
-        public void TrackProcess(UntrackedProcess process) { }
-        public void UntrackProcess(TrackedProcess process) { }
+        public void TrackProcess(UntrackedProcess process) {
+            var trackedProcess = new TrackedProcess();
+            trackedProcess.Name = process.Name;
+            trackedProcess.ID = process.ID;
+            trackedProcess.RunningTime = 0;
+            trackedProcesses.Add(trackedProcess);
+        }
+        public void UntrackProcess(TrackedProcess process) {
+            trackedProcesses.Remove(process);
+        }
         public List<TrackedProcess> GetTrackedProcesses() {
             return trackedProcesses;
         }

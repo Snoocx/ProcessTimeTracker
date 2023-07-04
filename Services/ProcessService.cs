@@ -14,35 +14,45 @@ namespace ProcessTimeTracker.Services
     /// </summary>
     public class ProcessService
     {
-        public ProcessService() {
-            var allProcesses = GetAllProcesses();
+        private List<UntrackedProcess> untrackedProcesses;
+
+        public ProcessService()
+        {
+            LoadRunningProcesses();
+            ShowRunningProcesses();
+        }
+
+        public void ShowRunningProcesses()
+        {
+            var allProcesses = GetUntrackedProcesses();
 
             foreach (var process in allProcesses)
             {
+                Console.Write("#" + process.ID + " | ");
                 Console.Write(process.Name + ": ");
                 Console.WriteLine(process.Path);
             }
             Console.WriteLine("Count:" + allProcesses.Count());
         }
 
-        public List<UntrackedProcess> GetAllProcesses()
+        public void LoadRunningProcesses()
         {
             Console.Write("Loading");
-            var list = new List<UntrackedProcess>();
+            untrackedProcesses = new List<UntrackedProcess>();
             foreach (var process in Process.GetProcesses())
             {
                 Console.Write(".");
                 try
                 {
                     var newProcess = new UntrackedProcess();
-                    newProcess.PID = process.Id;
+                    newProcess.ID = untrackedProcesses.Count() + 1;
                     newProcess.Name = process.ProcessName;
                     newProcess.Path = process.MainModule.FileName;
 
-                    if (list.FirstOrDefault(e => e.Name.Equals(newProcess.Name)) != null)
+                    if (untrackedProcesses.FirstOrDefault(e => e.Name.Equals(newProcess.Name)) != null)
                         continue;
 
-                    list.Add(newProcess);
+                    untrackedProcesses.Add(newProcess);
                 }
                 catch (Exception e)
                 {
@@ -50,7 +60,11 @@ namespace ProcessTimeTracker.Services
                 }
             }
             Console.WriteLine("");
-            return list;
+        }
+
+        public List<UntrackedProcess> GetUntrackedProcesses()
+        {
+            return untrackedProcesses;
         }
     }
 }

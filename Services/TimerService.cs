@@ -13,15 +13,12 @@ namespace ProcessTimeTracker.Services
     /// </summary>
     public class TimerService
     {
-
-        private ProcessService processService;
         private TrackerService trackerService;
         private Timer timer;
 
-        public TimerService()
+        public TimerService(TrackerService trackerService)
         {
-            processService = new ProcessService();
-            trackerService = new TrackerService();
+            this.trackerService = trackerService;
             timer = new Timer(1000);
         }
 
@@ -38,13 +35,19 @@ namespace ProcessTimeTracker.Services
 
         private void TimeElapsed(object sender, ElapsedEventArgs e)
         {
+            //jede Sek. nach der ID schauen ob sie noch aktiv ist, wenn nicht Zeit nicht mehr hochzählen etc.
             foreach (var process in trackerService.GetTrackedProcesses())
             {
-                //jede Sek. nach der ID schauen ob sie noch aktiv ist, wenn nicht Zeit nicht mehr hochzählen etc.
-                if (Process.GetProcessesByName(process.Name) != null)
+                var runningProcesses = Process.GetProcessesByName(process.Name);
+                foreach(var runningProcess in runningProcesses)
                 {
-                    process.RunningTime++;
-                    Console.WriteLine(process.Name + " tracked + 1sek. Total Time Running: " + process.RunningTime);
+                    if (!runningProcess.HasExited)
+                    {
+                        process.RunningTime++;
+                        if(process.RunningTime % 20 == 0)
+                            Console.WriteLine(process.Name + " tracked.. Total Time Running: " + process.RunningTime + " seconds.");
+                        break;
+                    }
                 }
             }
         }
