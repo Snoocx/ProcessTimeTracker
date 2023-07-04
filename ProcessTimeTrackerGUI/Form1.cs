@@ -22,7 +22,6 @@ namespace ProcessTimeTrackerGUI
             int selectedRowIndex = dataGridView1.CurrentCell.RowIndex;
             if (selectedRowIndex >= 0 && selectedRowIndex < dataGridView1.Rows.Count)
             {
-                // Lesen Sie den Wert der Zelle in der Spalte "Name" der ausgewählten Zeile
                 int id = Int32.Parse(dataGridView1.Rows[selectedRowIndex].Cells["ID"].Value.ToString());
                 handler.TrackProcessByListID(id);
             }
